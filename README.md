@@ -1,0 +1,2 @@
+# kitty-hackathon
+Social Budgeting
