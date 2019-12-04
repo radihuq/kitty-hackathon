@@ -5,6 +5,10 @@ const KittySchema = mongoose.Schema({
         type: String,
         required: true
     },
+    customid: {
+        type: String,
+        // required: true
+    },
     creator: {
         type: String,
         required: true

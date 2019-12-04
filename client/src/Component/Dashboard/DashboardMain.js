@@ -6,6 +6,7 @@ import './Dashboard.css';
 import UserData from '../../Context/UserData';
 
 import MenuMain from './Menu/MenuMain';
+import DashboardActivity from './DashboardActivity';
 
 import {Loader} from 'semantic-ui-react';
 
@@ -17,7 +18,6 @@ const DashboardMain = () => {
     const [loadingData, setLoadingData] = useState(false);
     const [userData, setUserData] = useState({});
     const [activeMenuItem, setActiveMenuItem] = useState('');
-    const [MainComponent, setMainComponent] = useState(lazy(() => import('./Overview/OverviewMain')));
 
     const history = useHistory();
 
@@ -40,7 +40,8 @@ const DashboardMain = () => {
             axios.post(`${process.env.REACT_APP_SERVER}/api/load/user`, data)
             .then((res) => {
                 console.log(res);
-                setUserData(res.response);
+                setActiveMenuItem('overview');
+                setUserData(res.data.response);
                 setInitialized(true);
             })
             .catch((err) => {
@@ -53,35 +54,27 @@ const DashboardMain = () => {
 
     const handleChangeMenu = (v) => {
         history.push(`/dashboard?id=${query.id}&v=${v}`);
-        if (v === 'overview') {
-            let ActiveComponent = lazy(() => import('./Overview/OverviewMain'));
-            setMainComponent(ActiveComponent);
-        } else if (v === 'profile') {
-            let ActiveComponent = lazy(() => import('./Profile/ProfileMain'));
-            setMainComponent(ActiveComponent);
-        } else if (v === 'groups') {
-            let ActiveComponent = lazy(() => import('./Groups/GroupsMain'));
-            setMainComponent(ActiveComponent);
-        }
         setActiveMenuItem(v);
     }
 
+    console.log(userData);
+
+    if (initialized) {
+        if (userData.data) {
+            console.log(userData);
+            return (  
+                <UserData userdata={userData}> 
+                    <div className="dashboardParentDiv">
+                        <MenuMain activemenu={activeMenuItem} changemenu={handleChangeMenu} />
+                        <DashboardActivity activity={activeMenuItem} />
+                    </div>
+                </UserData>
+            );
+        }
+    }
     return (
-        <div>
-            {!initialized ? 
-                <div className="dashboardParentDiv">
-                    <Loader active inline /> 
-                </div>
-                :
-                <div className="dashboardParentDiv">
-                    <MenuMain activemenu={activeMenuItem} changemenu={handleChangeMenu} />
-                    <UserData userdata={userData}>
-                        <Suspense fallback={<div className="suspenseFallbackLoaderDiv"><Loader active inline /></div>}>
-                            <MainComponent />
-                        </Suspense>
-                    </UserData>
-                </div>
-            }
+        <div className="dashboardParentDiv">
+            <Loader active inline /> 
         </div>
     );
 }
