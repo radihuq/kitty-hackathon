@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv/config');
+const axios = require('axios');
 
 const SERVER_PORT = process.env.PORT;
 const DB_CONNECTION = process.env.DB_CONNECTION;
