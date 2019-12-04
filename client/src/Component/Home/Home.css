@@ -1,0 +1,47 @@
+.HomeParentDiv {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 60fr 30fr 30fr;
+}
+
+.HomeImage {
+    grid-row: 1;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.HomeText {
+    height: 100%;
+    width: 100%;
+    padding: 2em;
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.HomeCTA {
+    height: 100%;
+    width: 100%;
+    padding: 2em;
+    grid-row: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.registerFormDiv {
+    padding: 1em;
+    font-size: 1.5em;
+}
+
+.loginFormDiv {
+    padding: 1em;
+    font-size: 1.5em;
+}

@@ -19,6 +19,7 @@ const UserAccountSchema = mongoose.Schema({
     phoneNumber: {
         type: Number
     },
+    data: [],
     date: {
         type: Date,
         default: Date.now

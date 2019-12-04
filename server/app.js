@@ -21,6 +21,10 @@ const registerRoute = require('./routes/Register');
 app.use(`/api`, registerRoute);
 const loginRoute = require('./routes/Login');
 app.use(`/api`, loginRoute);
+const loadRoute = require('./routes/Load');
+app.use(`/api/load`, loadRoute);
+const dashboardRoute = require('./routes/Dashboard');
+app.use(`/api/dashboard`, dashboardRoute);
 
 //Start Server
 const os = require('os');

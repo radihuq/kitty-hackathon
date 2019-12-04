@@ -1,0 +1,14 @@
+.groupsParentDiv {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.5em;
+}
+
+.currentGroupsContainer {
+    margin-top: 1em;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}

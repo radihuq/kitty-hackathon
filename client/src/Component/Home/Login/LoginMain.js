@@ -2,9 +2,13 @@ import React, {useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import axios from 'axios';
 
+import {Icon, Form, Button} from 'semantic-ui-react';
+
 const LoginMain = () => {
 
     const [userInput, setUserInput] = useState({email: '', password: ''});
+    const [buttonLoading, setButtonLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const history = useHistory();
 
@@ -30,6 +34,8 @@ const LoginMain = () => {
 
     const handleRegisterSubmit = (e) => {
         e.preventDefault();
+        setErrorMessage('');
+        setButtonLoading(true);
 
         const data = {
             email: userInput.email,
@@ -39,30 +45,41 @@ const LoginMain = () => {
         axios.post(`${process.env.REACT_APP_SERVER}/api/login`, data)
         .then((res) => {
             console.log(res);
-
+            
             if (res.status === 201) {
-                alert('Bad combination');
+                setErrorMessage('Incorrect email/password combination. Please try again');
+                setButtonLoading(false);
             }
 
             if (res.status === 200) {
-                history.push(`/1223131fasfa`);
+                history.push(`/dashboard?id=${res.data.response.id}&v=overview`);
+                setButtonLoading(false);
             }
         })
         .catch((err) => {
             console.log(err);
-            alert(err);
+            setErrorMessage(`Error: ${err}`);
+            setButtonLoading(false);
         })
     }
 
+    const handleGoBackClick = () => {
+        history.push(`/`);
+    }
+
     return (
-        <div>
-            <form onSubmit={handleRegisterSubmit}>
-                <p>Email</p>
-                <input type='text' onChange={handleUserInputChange} id='email' value={userInput.email} />
-                <p>Password</p>
-                <input type='password' onChange={handleUserInputChange} id='password' value={userInput.password} />
-                <button type='submit'>Create Account</button>
-            </form>
+        <div className="loginFormDiv">
+            <p className="formBackButton" onClick={handleGoBackClick}><Icon name='long arrow alternate left' /> Back</p>
+            <p className="formHeaderText">Log in to Kitty</p>
+            <Form onSubmit={handleRegisterSubmit} style={{display: 'flex', flexDirection: 'column'}}>
+                <label style={{fontSize: '1.5em', marginBottom: '0.25em'}}>Email<span className="formRequiredLabel">*</span></label>
+                <Form.Input fluid placeholder='john.doe@gmail.com' required onChange={handleUserInputChange} id='email' value={userInput.email} style={{margin: 0, fontSize: '1.5em'}} />
+                
+                <label style={{fontSize: '1.5em', marginBottom: '0.25em'}}>Password<span className="formRequiredLabel">*</span></label>
+                <Form.Input type='password' fluid required onChange={handleUserInputChange} id='password' value={userInput.password} style={{margin: 0, fontSize: '1.5em'}} />
+                <Button loading={buttonLoading} disabled={buttonLoading} type='submit' style={{fontSize: '1.5em'}}>Log In</Button>
+                <p className="formErrorMessage">{errorMessage}</p>
+            </Form>
         </div>
     );
 }

@@ -1,3 +1,46 @@
 .App {
-    font-size: 32px;
+    display: none;
+}
+
+.AppDesktopWarning {
+    display: block;
+}
+
+@media only screen and (max-width: 768px) {
+    .App {
+        display: inherit;
+        font-family: 'Montserrat', sans-serif;
+        height: 100vh;
+        width: 100vw;
+    }
+
+    .AppDesktopWarning {
+        display: none;
+    }
+    
+    .suspenseFallbackLoaderDiv {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .formBackButton {
+        display: inline-block;
+    }
+
+    .formHeaderText {
+        font-weight: 600;   
+    }
+
+    .formRequiredLabel {
+        color: rgba(192, 57, 43, 1);
+    }
+
+    .formErrorMessage {
+        text-align: center;
+        color: rgba(192, 57, 43, 1);  
+        font-size: 1.5em;
+    }
 }
