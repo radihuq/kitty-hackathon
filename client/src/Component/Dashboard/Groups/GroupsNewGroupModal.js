@@ -76,7 +76,7 @@ const GroupsNewGroupModal = ({modalopen, handlemodalclose}) => {
             console.log(res);
             setNewGroupInfo({name: '', type: '', description: '', amount: 0, optOut: 0, paymentFrequency: 0});
             setButtonLoading(false);
-            updateGroups(groupData);
+            updateGroups(res.data.response);
             handlemodalclose();
         })
         .catch((err) => {

@@ -29,6 +29,7 @@ router.post('/kitty/create', async (req, res) => {
         amount: req.body.amount,
         paymentfrequency: req.body.paymentfrequency,
         users: [req.body.creator],
+        customerid: crypto.randomBytes(3).toString('hex')
         // customerid: req.body.customerid
     }
 
@@ -44,8 +45,8 @@ router.post('/kitty/create', async (req, res) => {
             if (!doc) {
                 res.status(201).json({message: 'Could not find account', response: {}});
             } else {
-                const createKitty = kitty.save();
-                res.status(200).json({message: `New kitty created`, response: createKitty});    
+                kitty.save();
+                res.status(200).json({message: `New kitty created`, response: kittyDetails});    
             }
         });
     } catch(err) {

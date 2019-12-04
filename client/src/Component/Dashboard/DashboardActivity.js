@@ -1,6 +1,8 @@
 import React, {useState, useEffect, lazy, Suspense} from 'react';
 import {useHistory} from 'react-router-dom';
 
+import GroupView from './Groups/GroupView/GroupView';
+
 const qs = require('query-string');
 
 const DashboardActivity = ({activity}) => {
@@ -17,6 +19,8 @@ const DashboardActivity = ({activity}) => {
         setInitialized(true);
     }
 
+    let query = qs.parse(history.location.search);
+
     if (initialized) {
 
         let ActiveComponent;
@@ -30,9 +34,15 @@ const DashboardActivity = ({activity}) => {
         }
 
         return (
-            <Suspense fallback={<div>Loading...</div>}>
-                <ActiveComponent />
-            </Suspense>
+            <div style={{height: '95%', width: '100%'}}>
+                {(query.g) ? 
+                    <GroupView />
+                :
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <ActiveComponent />
+                    </Suspense>
+                }
+            </div>
         );
     }
 

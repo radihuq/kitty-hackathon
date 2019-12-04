@@ -5,9 +5,9 @@ const KittySchema = mongoose.Schema({
         type: String,
         required: true
     },
-    customid: {
+    customerid: {
         type: String,
-        // required: true
+        required: true
     },
     creator: {
         type: String,
@@ -32,7 +32,7 @@ const KittySchema = mongoose.Schema({
         type: Number
     },
     data: {
-        groups: []
+        transactions: []
     },
     users: [],
     date: {

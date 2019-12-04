@@ -25,6 +25,8 @@ const loadRoute = require('./routes/Load');
 app.use(`/api/load`, loadRoute);
 const dashboardRoute = require('./routes/Dashboard');
 app.use(`/api/dashboard`, dashboardRoute);
+const groupRoute = require('./routes/Group');
+app.use(`/api/group`, groupRoute);
 
 //Start Server
 const os = require('os');

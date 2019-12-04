@@ -52,6 +52,7 @@ const LoginMain = () => {
             }
 
             if (res.status === 200) {
+                sessionStorage.setItem('kittyuserid', res.data.response.id)
                 history.push(`/dashboard?id=${res.data.response.id}&v=overview`);
                 setButtonLoading(false);
             }

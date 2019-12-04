@@ -64,7 +64,7 @@ const DashboardMain = () => {
             console.log(userData);
             return (  
                 <UserData userdata={userData}> 
-                    <div className="dashboardParentDiv">
+                    <div className="dashboardParentDiv" style={{height: '100%', width: '100%'}}>
                         <MenuMain activemenu={activeMenuItem} changemenu={handleChangeMenu} />
                         <DashboardActivity activity={activeMenuItem} />
                     </div>
