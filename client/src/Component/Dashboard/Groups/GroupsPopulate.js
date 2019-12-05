@@ -7,7 +7,7 @@ const qs = require('query-string');
 
 const GroupsPopulate = ({groupdata}) => {
 
-    // console.log(groupdata);
+    console.log(groupdata);
 
     const history = useHistory();
 
@@ -21,7 +21,7 @@ const GroupsPopulate = ({groupdata}) => {
         <Card fluid style={{margin: '0 0 1em 0'}}>
             <Card.Content>
                 <Card.Header style={{fontSize: '1em'}}>{groupdata.name}</Card.Header>
-                <Card.Meta style={{fontSize: '1em'}}>5 members</Card.Meta>
+                <Card.Meta style={{fontSize: '1em'}}>{groupdata.customerid}</Card.Meta>
             </Card.Content>
             <Card.Content extra style={{margin: 0}}>
                 <Button primary onClick={handleEnterGroupClick}>Enter</Button>

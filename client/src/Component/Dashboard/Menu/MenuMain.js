@@ -17,18 +17,13 @@ const MenuMain = ({activemenu, changemenu}) => {
         <div style={{height: '5%', width: '100%'}}>
             <Menu style={{margin: 0}}>
                 <Menu.Item
-                    name='overview'
-                    active={activeItem === 'overview'}
-                    onClick={handleMenuItemClick}
-                />
-                <Menu.Item
-                    name='profile'
-                    active={activeItem === 'profile'}
-                    onClick={handleMenuItemClick}
-                />
-                <Menu.Item
                     name='groups'
                     active={activeItem === 'groups'}
+                    onClick={handleMenuItemClick}
+                />
+                <Menu.Item
+                    name='join'
+                    active={activeItem === 'join'}
                     onClick={handleMenuItemClick}
                 />
             </Menu>

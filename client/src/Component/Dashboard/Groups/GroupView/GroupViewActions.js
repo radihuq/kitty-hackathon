@@ -1,5 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
+
+import {CTX} from '../../../../Context/GroupData';
 
 import GroupViewContributeModal from './GroupViewContributeModal';
 import GroupViewWithdrawModal from './GroupViewWithdrawModal';
@@ -14,6 +16,7 @@ const GroupViewActions = () => {
     const [buttonDisabled, setButtonDisabled] = useState(true);
     const [showContributeModal, setShowContributeModal] = useState(false);
     const [showWithdrawModal, setShowWithdrawModal] = useState(false);
+    const {groupData} = useContext(CTX);
 
     const history = useHistory();
 
@@ -34,6 +37,20 @@ const GroupViewActions = () => {
     });
 
     let query = qs.parse(history.location.search);
+
+    let balance = 0;
+
+    let loop = groupData.data.transactions;
+    for (let i=0; i < loop.length; i++) {
+        if (loop[i].user === sessionStorage.getItem('kittyuserid')) {
+            if (loop[i].type === 'contribute') {
+                balance += Number(loop[i].amount);
+            }
+            if (loop[i].type === 'withdraw') {
+                balance -= Number(loop[i].amount);
+            }
+        }
+    }
 
     const handleFundInputValueChange = (e) => {
         setFundInputValue(e.target.value);
@@ -96,9 +113,9 @@ const GroupViewActions = () => {
             onChange={handleFundInputValueChange}
             onBlur={handleFundInputValueBlur}
             />
-            <p style={{textAlign: 'left', marginBottom: '1em', width: '80%'}}>Your funds: $100.00</p>
+            <p style={{textAlign: 'left', marginBottom: '1em', width: '80%'}}>Your funds: ${balance.toFixed(2)}</p>
             <Button compact fluid style={{justifySelf: 'end', width: '80%', fontSize: '1em', padding: '1em', margin: '0.5em 0'}} onClick={handleActionItemClick} id='contribute' disabled={buttonDisabled} >Contribute Funds</Button>
-            <Button compact fluid style={{justifySelf: 'end', width: '80%', fontSize: '1em', padding: '1em', margin: '0.5em 0'}} onClick={handleActionItemClick} id='withdraw' disabled={buttonDisabled} >Withdraw Funds</Button>
+            <Button compact fluid style={{justifySelf: 'end', width: '80%', fontSize: '1em', padding: '1em', margin: '0.5em 0'}} onClick={handleActionItemClick} id='withdraw' disabled={((balance < fundInputValue ? true : buttonDisabled))} >Withdraw Funds</Button>
         </div>
     );
 }

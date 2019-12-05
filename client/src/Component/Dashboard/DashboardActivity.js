@@ -25,12 +25,10 @@ const DashboardActivity = ({activity}) => {
 
         let ActiveComponent;
 
-        if (activity === 'overview') {
-            ActiveComponent = lazy(() => import('./Overview/OverviewMain'));
-        } else if (activity === 'profile') {
-            ActiveComponent = lazy(() => import('./Profile/ProfileMain'));
-        } else if (activity === 'groups') {
+        if (activity === 'groups') {
             ActiveComponent = lazy(() => import('./Groups/GroupsMain'));
+        } else if (activity === 'join') {
+            ActiveComponent = lazy(() => import('./Join/JoinMain'));
         }
 
         return (

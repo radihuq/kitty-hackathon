@@ -12,7 +12,7 @@ import {Statistic, Button, Menu} from 'semantic-ui-react';
 
 const qs = require('query-string');
 
-const GroupView = ({bankdata}) => {
+const GroupViewMain = ({bankdata}) => {
 
     const [activeItem, setActiveItem] = useState('transactions');
     const {groupData} = useContext(CTX);
@@ -30,7 +30,7 @@ const GroupView = ({bankdata}) => {
         history.push(`?id=${query.id}&v=${query.v}&g=${query.g}&actions=view`);
     }
 
-    console.log(groupData);
+    // console.log(groupData);
 
     return (
         <div className="groupViewParentDiv" style={{height: '100%', width: '100%'}}>
@@ -44,7 +44,8 @@ const GroupView = ({bankdata}) => {
                 </div>
                 
                 <Statistic>
-                    <Statistic.Value>$14,200.00</Statistic.Value>
+                    {/* <Statistic.Value>$14,200.00</Statistic.Value> */}
+                    <Statistic.Value>${Number(groupData.fundsBalance).toFixed(2)}</Statistic.Value>
                     {/* <Statistic.Value>{bankData[0].balances[0].amount}</Statistic.Value> */}
                     <Statistic.Label>Current Funds</Statistic.Label>
                 </Statistic>
@@ -82,4 +83,4 @@ const GroupView = ({bankdata}) => {
     );
 }
 
-export default GroupView;
+export default GroupViewMain;

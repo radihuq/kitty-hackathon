@@ -3,7 +3,9 @@ const app = express();
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv/config');
-const axios = require('axios');
+const server = app.listen(process.env.SOCKET_PORT, () => {
+    console.log(`Sockets.IO server up and running on port [${process.env.SOCKET_PORT}]`);
+});
 
 const SERVER_PORT = process.env.PORT;
 const DB_CONNECTION = process.env.DB_CONNECTION;
@@ -28,6 +30,45 @@ const dashboardRoute = require('./routes/Dashboard');
 app.use(`/api/dashboard`, dashboardRoute);
 const groupRoute = require('./routes/Group');
 app.use(`/api/group`, groupRoute);
+const authRoute = require('./routes/Auth');
+app.use(`/api/auth`, authRoute);
+
+//Socket.IO
+const io = require('socket.io')(server, {
+    path: '/kitty',
+    serveClient: false
+});
+
+io.on('connection', (socket) => {
+
+    // console.log(`[${socket.id}] connected`);
+
+    socket.on('socket_init', (payload) => {
+        console.log(`[${socket.id}] connected to Kitty ${payload.customerid}`);
+
+        socket.join(payload.customerid, (err) => {
+            if (err) {
+                console.log(err);
+            }
+
+            // console.log(Object.keys(socket.rooms));
+        })
+    });
+
+    socket.on('UPDATE_BALANCE', (payload) => {
+        // console.log(`update balance called`);
+        // console.log(payload);
+        io.in(`${payload.customerid}`).emit('UPDATE_BALANCE', payload);
+    });
+
+    socket.on('UPDATE_TRANSACTIONS', (payload) => {
+        // console.log('update transactions called');
+        // console.log(payload);
+        io.in(`${payload.customerid}`).emit('UPDATE_TRANSACTIONS', payload);
+    })
+
+})
+
 
 //Start Server
 const os = require('os');

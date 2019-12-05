@@ -1,6 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {useHistory} from 'react-router-dom';
 import axios from 'axios';
+
+import {CTX} from '../../../../Context/GroupData';
 
 import {Modal, Button} from 'semantic-ui-react';
 
@@ -9,6 +11,7 @@ const qs = require('query-string');
 const GroupViewWithdrawModal = ({modalopen, handleclosemodal, reset, amount}) => {
 
     const [buttonLoading, setButtonLoading] = useState(false);
+    const {updateBalance, updateTransactions, socketsUpdateBalance, socketsUpdateTransactions} = useContext(CTX);
 
     const history = useHistory();
     let query = qs.parse(history.location.search);
@@ -19,12 +22,24 @@ const GroupViewWithdrawModal = ({modalopen, handleclosemodal, reset, amount}) =>
         const data = {
             userid: sessionStorage.getItem('kittyuserid'),
             amount: amount,
-            type: 'withdraw'
+            type: 'withdraw',
+            customerid: query.g
         }
 
         axios.post(`${process.env.REACT_APP_SERVER}/api/group/contribute`, data)
         .then((res) => {
             console.log(res);
+            socketsUpdateBalance({type: 'withdraw', amount: amount, customerid: data.customerid});
+            // updateBalance({type: 'withdraw', amount: amount});
+            
+            let transactionDetails = {
+                type: data.type,
+                amount: data.amount,
+                user: data.userid
+            }
+
+            socketsUpdateTransactions(transactionDetails);
+            // updateTransactions(transactionDetails);
             reset();
             handleclosemodal();
             setButtonLoading(false);

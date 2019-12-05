@@ -1,8 +1,57 @@
-import React from 'react';
+import React, {useState, useContext} from 'react';
+import {useHistory} from 'react-router-dom';
+import axios from 'axios';
+
+import {CTX} from '../../../../Context/GroupData';
 
 import {Modal, Button} from 'semantic-ui-react';
 
-const GroupViewContributeModal = ({modalopen, handleclosemodal, amount}) => {
+const qs = require('query-string');
+
+const GroupViewContributeModal = ({modalopen, handleclosemodal, reset, amount}) => {
+
+    const [buttonLoading, setButtonLoading] = useState(false);
+    const {updateBalance, updateTransactions, socketsUpdateBalance, socketsUpdateTransactions} = useContext(CTX);
+
+    const history = useHistory();
+    let query = qs.parse(history.location.search);
+
+    const handleConfirmContributeClick = () => {
+        setButtonLoading(true);
+
+        const data = {
+            userid: sessionStorage.getItem('kittyuserid'),
+            amount: amount,
+            type: 'contribute',
+            customerid: query.g
+        }
+
+        axios.post(`${process.env.REACT_APP_SERVER}/api/group/contribute`, data)
+        .then((res) => {
+            console.log(res);
+            socketsUpdateBalance({type: 'contribute', amount: amount, customerid: data.customerid});
+            // updateBalance({type: 'contribute', amount: amount});
+
+            let transactionDetails = {
+                type: data.type,
+                amount: data.amount,
+                user: data.userid,
+                customerid: data.customerid
+            }
+
+            socketsUpdateTransactions(transactionDetails);
+            // updateTransactions(transactionDetails);
+            reset();
+            handleclosemodal();
+            setButtonLoading(false);
+            history.push(`?id=${query.id}&v=${query.v}&g=${query.g}`);
+        })
+        .catch((err) => {
+            console.log(err);
+            alert('There was an error!');
+            setButtonLoading(false);
+        })
+    }
 
     return(
         <Modal open={modalopen} onClose={handleclosemodal} size='small' centered={false} closeIcon>
@@ -11,8 +60,8 @@ const GroupViewContributeModal = ({modalopen, handleclosemodal, amount}) => {
                 <p>{`Are you sure you want to contribute ${amount} to this group?`}</p>
             </Modal.Description>
             <Modal.Actions>
-                <Button negative onClick={handleclosemodal}>No</Button>
-                <Button positive>Yes</Button>
+                <Button loading={buttonLoading} negative onClick={handleclosemodal}>No</Button>
+                <Button loading={buttonLoading} positive onClick={handleConfirmContributeClick}>Yes</Button>
             </Modal.Actions>
         </Modal>
     );

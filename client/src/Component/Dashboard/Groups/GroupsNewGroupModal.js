@@ -71,7 +71,12 @@ const GroupsNewGroupModal = ({modalopen, handlemodalclose}) => {
             paymentfrequency: newGroupInfo.paymentFrequency
         }
 
-        axios.post(`${process.env.REACT_APP_SERVER}/api/dashboard/kitty/create`, groupData)
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': sessionStorage.getItem('oauth')
+        }
+        
+        axios.post(`${process.env.REACT_APP_SERVER}/api/dashboard/kitty/create`, groupData, {headers: headers})
         .then((res) => {
             console.log(res);
             setNewGroupInfo({name: '', type: '', description: '', amount: 0, optOut: 0, paymentFrequency: 0});
@@ -83,29 +88,6 @@ const GroupsNewGroupModal = ({modalopen, handlemodalclose}) => {
             setErrorMessage(`Error: ${err}`);
             setButtonLoading(false);
         });
-
-
-        // axios.request({
-        //     url: '/oauth/token',
-        //     method: 'post',
-        //     baseURL: 'https://api.preprod.fusionfabric.cloud/login/v1/sandbox/oidc/token',
-        //     auth: {
-        //         username: 'username',
-        //         password: 'password',
-        //     },
-        //     data: {
-        //         "grant_type": "client_credentials",
-        //         "scope": "public"
-        //     }
-        // })
-        // .then((res) => {
-        //     console.log(res);
-        //     sessionStorage.setItem('oauth', res.data);
-        //     createBankAccount(bankInfo);
-        // })
-        // .catch((err) => {
-
-        // });
 
         // const bankInfo = {
         //     branchCode: '',
@@ -120,13 +102,15 @@ const GroupsNewGroupModal = ({modalopen, handlemodalclose}) => {
         //     emailAddresses: []
         // }
 
+        // createBankAccount(bankInfo);
+
         // function createBankAccount (bankInfo) {
         //     const headers = {
         //         'Content-Type': 'application/json',
         //         'Authorization': sessionStorage.getItem('oauth')
         //     }
 
-        //     axios.post(`fusionfabric.com/1313`, bankInfo, {headers: headers})
+        //     axios.post(`https://api.fusionfabric.cloud/retail-banking/customers/v1/personal-customers`, bankInfo, {headers: headers})
         //     .then((res) => {
         //         console.log(res);
         //         createKitty(groupData, res.data.response.customerid);

@@ -9,8 +9,12 @@ const GroupViewTransactions = () => {
     return (
         <div>
             <p>Group transactions</p>
-            {groupData.data.transactions.map((transaction, index) => (
-            <p key={`transaction_${index}`}>{`[${transaction.user}] ${transaction.type}: ${transaction.amount}`}</p>
+            {groupData.data.transactions.reverse().map((transaction, index) => (
+                transaction.type === 'withdraw' ?
+                    <p key={`transaction_${index}`} style={{color: 'red'}}>{`[${transaction.user}] ${transaction.type}: ${transaction.amount}`}</p>
+                :
+                    <p key={`transaction_${index}`} style={{color: 'green'}}>{`[${transaction.user}] ${transaction.type}: ${transaction.amount}`}</p>
+                
             ))}
         </div>
     );

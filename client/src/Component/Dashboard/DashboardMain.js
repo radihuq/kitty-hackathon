@@ -39,10 +39,20 @@ const DashboardMain = () => {
 
             axios.post(`${process.env.REACT_APP_SERVER}/api/load/user`, data)
             .then((res) => {
-                console.log(res);
-                setActiveMenuItem('overview');
+                setActiveMenuItem('groups');
                 setUserData(res.data.response);
-                setInitialized(true);
+                axios.get(`${process.env.REACT_APP_SERVER}/api/auth/verify`)
+                .then((res) => {
+                    if (res.status === 200) {
+                        sessionStorage.setItem('oauth', res.data.response.token);
+                        setInitialized(true);
+                    } else {
+                        console.log(res);
+                        alert('There was an issue.');
+                        setInitialized(true);
+                    }
+                })
+
             })
             .catch((err) => {
                 console.log(err);
