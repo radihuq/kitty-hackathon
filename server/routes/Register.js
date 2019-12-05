@@ -16,7 +16,7 @@ router.post('/register', async (req, res) => {
 
     try {
         const addAccount = await userAccount.save();
-        res.status(200).json({message: `New account created`, response: addAccount});
+        res.status(200).json({message: `New account created`, response: {data: addAccount, id: modelDetails.id}});
     } catch(err) {
         console.log(err);
         res.status(400).json({message: `error`, error: err});

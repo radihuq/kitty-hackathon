@@ -11,13 +11,18 @@ import DashboardMain from './Component/Dashboard/DashboardMain';
 
 const App = () => {
 
+    // if (!sessionStorage.getItem('kittyuserid')) {
+    //     sessionStorage.setItem('kittyuserid', Math.random().toString(36).substr(2, 8))
+    // }
+
+
     return (
         <div>
             <div className="App">
                 <Router>
                     <Switch>
-                        <Route path='/register' exact component={RegisterMain} />
-                        <Route path='/login' exact component={LoginMain} />
+                        {/* <Route path='/register' exact component={RegisterMain} />
+                        <Route path='/login' exact component={LoginMain} /> */}
                         <Route path='/dashboard' exact component={DashboardMain} />
                         <Route path='/' component={HomeMain} />
                     </Switch>
