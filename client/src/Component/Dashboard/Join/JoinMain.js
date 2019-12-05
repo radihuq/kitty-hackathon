@@ -130,7 +130,6 @@ const JoinMain = () => {
             placeholder='Enter 6 digit code'
             style={{width: '80%'}}
             fluid
-            maxLength="6"
             onChange={handleCodeInputChange}
             onKeyDown={handleCodeInputKeyDown}
             value={codeInput}

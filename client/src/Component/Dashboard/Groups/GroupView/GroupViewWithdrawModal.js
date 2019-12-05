@@ -35,7 +35,8 @@ const GroupViewWithdrawModal = ({modalopen, handleclosemodal, reset, amount}) =>
             let transactionDetails = {
                 type: data.type,
                 amount: data.amount,
-                user: data.userid
+                user: data.userid,
+                customerid: data.customerid
             }
 
             socketsUpdateTransactions(transactionDetails);
