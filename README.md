@@ -21,7 +21,7 @@ The purpose of this project is to allow individuals to create a joint bank-accou
 * Mongoose
 * Axios
 * SocketIO
-##### Database
+#### Database
 * MongoDB
-##### DevOps
+#### DevOps
 * AWS EC2
