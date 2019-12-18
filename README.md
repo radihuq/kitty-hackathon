@@ -7,21 +7,34 @@ This project utilizes Finastra's [FusionFabric Platform](https://www.finastra.co
 
 The purpose of this project is to allow individuals to create a joint bank-account with their peers in order to pool money into a savings account.
 
-### Technologies Used:
-#### Front End
+### Demo
+https://sls19.ca/
+
+### Technologies
 * React
+* Node.js
+* Express
+* MongoDB
+* Axios
 * Axios
 * SocketIO
 * Semantic UI
 * [qrcode.React](https://github.com/zpao/qrcode.react)
 * [react-qr-reader](https://github.com/JodusNodus/react-qr-reader)
-#### Back End
-* Node.js
-* Express
-* Mongoose
-* Axios
-* SocketIO
-#### Database
-* MongoDB
-#### DevOps
-* AWS EC2
+
+### Screenshots
+
+*Group Dashboard*
+![Group Dashboard](./screenshots/kitty_dashboard.png)
+
+*Invite peers to your group*
+![Invite peers to your group](./screenshots/kitty_invite.png)
+
+*Join a group*
+![Join a group](./screenshots/kitty_join.png)
+
+*Contribute funds to group*
+![Contribute funds to group](./screenshots/kitty_contribute.png)
+
+*List of groups you are a part of*
+![List of groups you are a part of](./screenshots/kitty_groups.png)
