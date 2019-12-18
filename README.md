@@ -16,7 +16,6 @@ https://sls19.ca/
 * Express
 * MongoDB
 * Axios
-* Axios
 * SocketIO
 * Semantic UI
 * [qrcode.React](https://github.com/zpao/qrcode.react)
@@ -25,16 +24,25 @@ https://sls19.ca/
 ### Screenshots
 
 *Group Dashboard*
+
 ![Group Dashboard](./screenshots/kitty_dashboard.png)
 
+
 *Invite peers to your group*
+
 ![Invite peers to your group](./screenshots/kitty_invite.png)
 
+
 *Join a group*
+
 ![Join a group](./screenshots/kitty_join.png)
 
+
 *Contribute funds to group*
+
 ![Contribute funds to group](./screenshots/kitty_contribute.png)
 
+
 *List of groups you are a part of*
+
 ![List of groups you are a part of](./screenshots/kitty_groups.png)
